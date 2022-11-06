@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fetch and Display API Data Using JS</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+</head>
+<body>
+    <div class="container mt-5 mb-5">
+        <h1 class="text-center mt-5 mb-5">Fetch and Display API Data Using JS</h1>
+
+        <div id="cards" class="row justify-content-center gap-4 m-auto" >
+
+        </div>
+    </div>
+
+
+    <script>
+        fetch('https://fakestoreapi.com/products/').then((data) => {
+            return data.json();
+        }).then((fullData) => {
+            let myData = "";
+            fullData.map((val) => {
+                myData += `
+                <div class="card" style="width: 18rem;">
+                <img src=${val.image} class="card-img-top" alt=${val.title} width="100" height="250px">
+                <div class="card-body">
+                  <h5 class="card-title">${val.title.substr(1,20)}...</h5>
+                  <p class="card-text">${val.description.substr(1,150)}...</p>
+                  <p>Price: $<strong>${val.price}</strong></p>
+                  <a href="#" class="btn btn-outline-danger">Buy Now</a>
+                </div>
+              </div>
+                `
+            })
+
+            document.getElementById("cards").innerHTML = myData;
+        }).catch((err) => {
+            console.log(err);
+        })
+    </script>
+</body>
+</html>
